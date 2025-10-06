@@ -1,0 +1,18 @@
+package com.zljin.flashbuy.mapper;
+
+import com.zljin.flashbuy.domain.UserPassword;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author zoulingjin
+* @description 针对表【user_password(用户密码表)】的数据库操作Mapper
+* @createDate 2025-10-06 11:19:21
+* @Entity generator.domain.UserPassword
+*/
+public interface UserPasswordMapper extends BaseMapper<UserPassword> {
+
+}
+
+
+
+
