@@ -1,6 +1,7 @@
 package com.zljin.flashbuy.exception;
 
 import com.zljin.flashbuy.model.vo.R;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -77,6 +78,18 @@ public class GlobalExceptionHandler {
         R<Void> result = R.error(400, "请求参数无效: " + message);
         result.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+    }
+
+    /**
+     * 处理JWT异常
+     */
+    @ExceptionHandler(JwtException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public R<Void> handleJwtException(JwtException e, HttpServletRequest request) {
+        log.error("jwt: {} - {}", request.getRequestURI(), e.getMessage(), e);
+        R<Void> result = R.error(500, e.getMessage());
+        result.setPath(request.getRequestURI());
+        return result;
     }
 
     /**

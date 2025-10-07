@@ -19,6 +19,18 @@ spring:
       pool-name: DateSourceHikariCP     # 连接池名字
       max-lifetime: 1800000           # 连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟 1800000ms
       connection-test-query: SELECT 1
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      database: 0
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 16 # 连接池最大连接数
+          max-wait: -1ms # 连接池最大阻塞等待时间（负值表示无限制）
+          max-idle: 8 # 连接池中的最大空闲连接
+          min-idle: 0 # 连接池中的最小空闲连接
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/*.xml # mapper.xml文件路径

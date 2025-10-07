@@ -11,6 +11,7 @@ import com.zljin.flashbuy.service.ItemService;
 import com.zljin.flashbuy.service.OrderInfoService;
 import com.zljin.flashbuy.util.AppConstants;
 import com.zljin.flashbuy.util.CommonUtil;
+import com.zljin.flashbuy.util.UserInfoHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public OrderVO createOrder(Long itemId, Long promoId, Integer amount) {
-        //todo 后面去拿有状态的userId
-        String userId = "1975086880087158785";
+        String userId = UserInfoHolder.getUser().getId();
         try {
             ItemVO itemVO = itemService.getItemById(itemId);
             if (itemVO == null) {

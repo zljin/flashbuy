@@ -3,6 +3,7 @@ package com.zljin.flashbuy.config;
 
 import com.zljin.flashbuy.model.AuditLog;
 import com.zljin.flashbuy.util.CommonUtil;
+import com.zljin.flashbuy.util.UserInfoHolder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -75,7 +76,11 @@ public class AuditLogAspect {
             auditLog.setUserAgent(request.getHeader("User-Agent"));
         }
 
-        auditLog.setGuid("");//todo clientUser get userInfo信息
+        //否则为匿名用户
+        if(UserInfoHolder.getUser() != null) {
+            auditLog.setGuid(UserInfoHolder.getUser().getId());
+        }
+
         Object result = null;
         try {
             result = joinPoint.proceed();

@@ -2,11 +2,6 @@ package com.zljin.flashbuy.model.vo;
 
 import lombok.Data;
 
-/**
- * @author leonard
- * @date 2022/9/3
- * @Description TODO
- */
 @Data
 public class UserVO {
     private String id;

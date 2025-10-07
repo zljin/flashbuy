@@ -29,7 +29,7 @@ public class ItemController {
         return ResponseEntity.ok(R.success(itemService.getItemById(Long.valueOf(itemId))));
     }
 
-    @GetMapping("/gets")
+    @GetMapping("/getPage")
     public ResponseEntity<PageResult<ItemVO>> listItem(@RequestParam(value = "title", required = false) String title,
                                                        @RequestParam(value = "pageCurrent", required = false, defaultValue = "1") Integer pageCurrent,
                                                        @RequestParam(value = "pageSize", required = false, defaultValue = "100") Integer pageSize) {
