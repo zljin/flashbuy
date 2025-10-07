@@ -5,3 +5,14 @@ mybatis-plus:
 logging:
   level:
     com.zljin.flashbuy: debug
+
+# Spring Doc OpenAPI 基本配置
+# http://localhost:8090/swagger-ui/index.html
+# http://localhost:8090/v3/api-docs
+springdoc:
+  api-docs:
+    path: /v3/api-docs # 开启OpenAPI JSON端点
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html # Swagger UI路径
+    enabled: true # 启用Swagger UI
