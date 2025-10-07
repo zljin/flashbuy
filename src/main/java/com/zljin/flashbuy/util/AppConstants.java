@@ -11,7 +11,7 @@ public class AppConstants {
     //redis key
     //key: OTP:email,value: otp code
     public static final String OTP_KEY = "OTP:";
-    //key: USER_CACHE:userId:token, value: userInfo
+    //key: USER_CACHE:userId, value: userVO(里面包含token信息)
     public static final String USER_CACHE_KEY = "USER_CACHE:";
 
 }
