@@ -6,6 +6,7 @@ public enum BusinessExceptionEnum {
     USER_NOT_EXIST(20001, "用户不存在"),
     USER_LOGIN_FAIL(20002, "用户账号或密码不正确"),
     USER_NOT_LOGIN(20003, "用户未登录"),
+    USER_NOT_ADMIN(20006, "非管理员用户"),
     USER_OTP_FAIL(20004, "验证码不对"),
     REGISTER_FAIL(20005, "注册失败"),
     STOCK_NOT_ENOUGH(30001, "库存不足"),

@@ -1,8 +1,8 @@
 package com.zljin.flashbuy.config;
 
-import com.zljin.flashbuy.domain.UserInfo;
 import com.zljin.flashbuy.exception.BusinessException;
 import com.zljin.flashbuy.exception.BusinessExceptionEnum;
+import com.zljin.flashbuy.model.PermitAdmit;
 import com.zljin.flashbuy.model.vo.UserVO;
 import com.zljin.flashbuy.service.JwtService;
 import com.zljin.flashbuy.service.RedisService;
@@ -12,8 +12,9 @@ import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,6 +25,10 @@ public class UserInterceptor implements HandlerInterceptor {
 
     private final JwtService jwtService;
     private final RedisService redisService;
+
+    @Value("${app.adminAccount:admin@qq.com}")
+    private String adminAccount;
+
 
     public UserInterceptor(JwtService jwtService, RedisService redisService) {
         this.jwtService = jwtService;
@@ -38,6 +43,11 @@ public class UserInterceptor implements HandlerInterceptor {
         if (!jwtService.validateToken(token)) {
             throw new JwtException("JWT Token验证失败");
         }
+
+        if (!checkIfAdmin(token, handler)) {
+            throw new BusinessException(BusinessExceptionEnum.USER_NOT_ADMIN.getErrorCode(), BusinessExceptionEnum.USER_NOT_ADMIN.getErrorMessage());
+        }
+
 
         String userId = jwtService.getUserIdFromToken(token);
 
@@ -66,5 +76,18 @@ public class UserInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
         UserInfoHolder.removeUser();
+    }
+
+    private boolean checkIfAdmin(String token, Object handler) {
+        PermitAdmit annotation = null;
+        if (handler instanceof HandlerMethod) {
+            annotation = ((HandlerMethod) handler).getMethodAnnotation(PermitAdmit.class);
+        }
+        if (annotation != null) {
+            String usernameFromToken = jwtService.getUsernameFromToken(token);
+            return adminAccount.equals(usernameFromToken);
+        }else {
+            return true;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.zljin.flashbuy.controller;
 
+import com.zljin.flashbuy.model.PermitAdmit;
 import com.zljin.flashbuy.model.vo.R;
 import com.zljin.flashbuy.service.ItemService;
 import com.zljin.flashbuy.model.dto.ItemDTO;
@@ -19,6 +20,13 @@ public class ItemController {
         this.itemService = itemService;
     }
 
+    /**
+     * 只有管理员才能创建商品
+     * @PermitAdmit
+     * @param itemDTO
+     * @return
+     */
+    @PermitAdmit
     @PostMapping("/create")
     public ResponseEntity<R<ItemVO>> createItem(@Valid @RequestBody ItemDTO itemDTO) {
         return ResponseEntity.ok(R.success(itemService.createItem(itemDTO)));
