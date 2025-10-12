@@ -289,7 +289,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "  {\r\n    \"title\": \"Realme GT5 Pro 512GB\",\r\n    \"description\": \"真我GT5 Pro 512GB 赤岩橙 骁龙8Gen3 IMX890潜望长焦 100W快充\",\r\n    \"imgUrl\": \"https://img.realme.com/gt5pro.png\",\r\n    \"price\": 3099.0,\r\n    \"stock\": 3,\r\n    \"promo\": {\r\n      \"promoName\": \"真我性能旗舰小版本\",\r\n      \"promoItemPrice\": 2099.0,\r\n      \"startDate\": \"2025-10-07 16:20:00\",\r\n      \"endDate\": \"2025-10-07 17:20:00\",\r\n      \"status\": 1\r\n    }\r\n  }"
+					"raw": "{\r\n    \"title\": \"Sony Xperia 1 V 512GB\",\r\n    \"description\": \"索尼Xperia 1 V 512GB 冰雾白 骁龙8Gen2 4K OLED\",\r\n    \"imgUrl\": \"https://www.sony.com/xperia1v.png\",\r\n    \"price\": 8999.0,\r\n    \"stock\": 6,\r\n    \"promo\": {\r\n      \"promoName\": \"索尼影像节\",\r\n      \"promoItemPrice\": 8499.0,\r\n      \"startDate\": \"2024-03-08 00:00:00\",\r\n      \"endDate\": \"2024-03-18 23:59:59\",\r\n      \"status\": 1\r\n    }\r\n  }"
 				},
 				"url": {
 					"raw": "http://localhost:8090/item/create",
@@ -505,11 +505,11 @@
 					}
 				],
 				"body": {
-					"mode": "formdata",
-					"formdata": []
+					"mode": "raw",
+					"raw": "{\n    \"itemId\":\"1975126656475533314\",\n    \"amount\":1,\n    \"promoId\":\"1975126656542642178\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8090/order/create?itemId=1975126656475533314&amount=2&promoId=1975126656542642178",
+					"raw": "http://localhost:8090/order/create",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -518,20 +518,6 @@
 					"path": [
 						"order",
 						"create"
-					],
-					"query": [
-						{
-							"key": "itemId",
-							"value": "1975126656475533314"
-						},
-						{
-							"key": "amount",
-							"value": "2"
-						},
-						{
-							"key": "promoId",
-							"value": "1975126656542642178"
-						}
 					]
 				},
 				"description": "Generated from a curl request: \ncurl 'http://localhost:8090/order/createorder?itemId=853388545073610752&amount=1&promoId=853388545744699392' \\\n  -X 'POST' \\\n  -H 'Accept: */*' \\\n  -H 'Accept-Language: zh-CN,zh;q=0.9' \\\n  -H 'Cache-Control: no-cache' \\\n  -H 'Connection: keep-alive' \\\n  -H 'Content-Length: 0' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Cookie: jenkins-timestamper-offset=-28800000' \\\n  -H 'Origin: http://localhost:8090' \\\n  -H 'Pragma: no-cache' \\\n  -H 'Referer: http://localhost:8090/swagger-ui.html' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-origin' \\\n  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \\\"Google Chrome\\\";v=\\\"113\\\", \\\"Chromium\\\";v=\\\"113\\\", \\\"Not-A.Brand\\\";v=\\\"24\\\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \\\"Windows\\\"' \\\n  -H 'token: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoibG9naW5fdG9rZW4iLCJpYXQiOjE2ODM2MzA3NTIsInVzZXJuYW1lIjoiMjY2ODQ1MjM5NkBxcS5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImV4cCI6MTY4MzYzMTM1Mn0.92MxZcMl0FchaS0X4FuJyzJwWb6gzzphhsCGWscwhPQ' \\\n  --compressed"
