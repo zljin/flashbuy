@@ -19,7 +19,7 @@ public class Item {
      * 主键，自增ID
      */
     @TableId(value = "id")
-    private Long id;
+    private String id;
 
     /**
      * 商品标题

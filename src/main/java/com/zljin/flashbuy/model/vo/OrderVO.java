@@ -18,7 +18,7 @@ public class OrderVO {
     /**
      *
      */
-    private Long itemId;
+    private String itemId;
     /**
      *
      */
@@ -34,5 +34,5 @@ public class OrderVO {
     /**
      *
      */
-    private Long promoId;
+    private String promoId;
 }

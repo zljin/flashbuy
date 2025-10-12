@@ -1,7 +1,7 @@
 -- 商品表
 DROP TABLE IF EXISTS `item`;
 CREATE TABLE `item` (
-                        `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键，自增ID',
+                        `id` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '主键，自增ID',
                         `title` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '商品标题',
                         `price` DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '商品价格',
                         `description` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '商品描述',
@@ -17,9 +17,9 @@ CREATE TABLE `item` (
 -- 商品库存表
 DROP TABLE IF EXISTS `item_stock`;
 CREATE TABLE `item_stock` (
-                              `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键，自增ID',
+                              `id` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '主键，自增ID',
                               `stock` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '库存数量',
-                              `item_id` BIGINT UNSIGNED NOT NULL COMMENT '商品ID，关联 item 表',
+                              `item_id` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品ID，关联 item 表',
                               `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                               `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                               `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否删除：0-未删除，1-已删除',
@@ -30,11 +30,11 @@ CREATE TABLE `item_stock` (
 -- 活动表
 DROP TABLE IF EXISTS `promo`;
 CREATE TABLE `promo` (
-                         `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键，自增ID',
+                         `id` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '主键，自增ID',
                          `promo_name` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '活动名称',
                          `start_date` DATETIME NOT NULL DEFAULT '2000-01-01 00:00:00' COMMENT '开始时间',
                          `end_date` DATETIME NOT NULL DEFAULT '2000-01-01 00:00:00' COMMENT '结束时间',
-                         `item_id` BIGINT UNSIGNED NOT NULL COMMENT '关联商品ID',
+                         `item_id` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '关联商品ID',
                          `promo_item_price` DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '活动商品价格',
                          `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                          `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -65,7 +65,7 @@ CREATE TABLE `user_info` (
 -- 用户密码表
 DROP TABLE IF EXISTS `user_password`;
 CREATE TABLE `user_password` (
-                                 `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键，自增ID',
+                                 `id` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '主键，自增ID',
                                  `encrpt_password` VARCHAR(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '加密密码',
                                  `user_id` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户ID，关联 user_info 表',
                                  PRIMARY KEY (`id`) USING BTREE,
@@ -78,11 +78,11 @@ DROP TABLE IF EXISTS `order_info`;
 CREATE TABLE `order_info` (
                               `id` CHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '订单主键',
                               `user_id` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户ID',
-                              `item_id` BIGINT UNSIGNED NOT NULL COMMENT '商品ID',
+                              `item_id` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '商品ID',
                               `item_price` DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '商品单价',
                               `amount` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '购买数量',
                               `order_price` DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '订单总价',
-                              `promo_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '活动ID',
+                              `promo_id` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '活动ID',
                               `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                               `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                               `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否删除：0-未删除，1-已删除',

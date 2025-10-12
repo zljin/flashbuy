@@ -17,7 +17,7 @@ public class UserPassword {
      * 主键，自增ID
      */
     @TableId(value = "id")
-    private Long id;
+    private String id;
 
     /**
      * 加密密码

@@ -15,11 +15,11 @@ public interface ItemService extends IService<Item> {
 
     ItemVO createItem(ItemDTO itemDTO);
 
-    ItemVO getItemById(Long id);
+    ItemVO getItemById(String id);
 
     PageResult<ItemVO> listItem(String title, Integer pageCurrent, Integer pageSize);
 
-    void decreaseStock(Long itemId, Integer amount);
+    void decreaseStock(String itemId, Integer amount);
 
-    void increaseSales(Long itemId, Integer amount);
+    void increaseSales(String itemId, Integer amount);
 }

@@ -34,7 +34,7 @@ public class ItemController {
 
     @GetMapping("/get/{itemId}")
     public ResponseEntity<R<ItemVO>> getItem(@PathVariable(value = "itemId") String itemId) {
-        return ResponseEntity.ok(R.success(itemService.getItemById(Long.valueOf(itemId))));
+        return ResponseEntity.ok(R.success(itemService.getItemById((itemId))));
     }
 
     @GetMapping("/getPage")

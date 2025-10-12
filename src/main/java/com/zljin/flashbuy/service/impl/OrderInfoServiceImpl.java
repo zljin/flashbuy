@@ -40,7 +40,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
-    public OrderVO createOrder(Long itemId, Long promoId, Integer amount) {
+    public OrderVO createOrder(String itemId, String promoId, Integer amount) {
         String userId = UserInfoHolder.getUser().getId();
         try {
             ItemVO itemVO = itemService.getItemById(itemId);

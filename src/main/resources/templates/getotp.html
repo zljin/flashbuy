@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>获取验证码</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/dev-form.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="../static/js/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="content">
+    <h3 class="form-title">获取邮箱验证码</h3>
+
+    <div class="mb-4">
+        <label class="form-label">邮箱地址</label>
+        <input class="form-control" type="email" placeholder="请输入您的邮箱地址" name="email" id="email" required>
+        <div class="form-text">验证码将发送到此邮箱</div>
+    </div>
+
+    <button class="btn btn-primary" id="getotp" type="submit">
+        获取验证码
+    </button>
+
+    <div class="info-text">
+        没有收到验证码？请检查垃圾邮件或稍后重试
+    </div>
+</div>
+
+<script>
+    jQuery(document).ready(function () {
+        // 绑定otp的click事件用于向后端发送获取验证码的请求
+        $("#getotp").on("click", function () {
+            var email = $("#email").val();
+            if (email == null || email == "") {
+                alert("邮箱地址不能为空");
+                return false;
+            }
+
+            // 简单的邮箱格式验证
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("请输入有效的邮箱地址");
+                return false;
+            }
+
+            // 显示加载状态
+            var $btn = $(this);
+            var originalText = $btn.text();
+            $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 发送中...');
+
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8090/user/get-otp?email=" + $("#email").val(),
+                // 允许跨域请求
+                xhrFields: { withCredentials: true },
+                success: function (data) {
+                    if (data.code == 200) {
+                        alert("验证码已发送到您的邮箱，请注意查收");
+                        window.location.href = "register.html";
+                    } else {
+                        alert("验证码发送失败，原因：" + (data.message || "未知错误"));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("请求失败:", xhr);
+                    alert("验证码发送失败: " + (xhr.responseJSON ? xhr.responseJSON.message : error));
+                },
+                complete: function() {
+                    // 恢复按钮状态
+                    $btn.prop('disabled', false).html(originalText);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

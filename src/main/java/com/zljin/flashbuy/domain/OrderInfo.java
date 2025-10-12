@@ -30,7 +30,7 @@ public class OrderInfo {
      * 商品ID
      */
     @TableField(value = "item_id")
-    private Long itemId;
+    private String itemId;
 
     /**
      * 商品单价
@@ -54,7 +54,7 @@ public class OrderInfo {
      * 活动ID
      */
     @TableField(value = "promo_id")
-    private Long promoId;
+    private String promoId;
 
     /**
      * 创建时间

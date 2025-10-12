@@ -78,7 +78,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item>
     }
 
     @Override
-    public ItemVO getItemById(Long id) {
+    public ItemVO getItemById(String id) {
         Item itemEntity = itemMapper.selectById(id);
         QueryWrapper<ItemStock> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("item_id", id);
@@ -109,7 +109,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item>
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
-    public void decreaseStock(Long itemId, Integer amount) {
+    public void decreaseStock(String itemId, Integer amount) {
         //todo 后面用分布式锁
         int affectedRow = itemStockMapper.decreaseStock(itemId, amount);
         if (affectedRow <= 0) {
@@ -119,7 +119,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item>
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
-    public void increaseSales(Long itemId, Integer amount) {
+    public void increaseSales(String itemId, Integer amount) {
         //todo 后面用分布式锁
         itemStockMapper.increaseSales(itemId, amount);
     }

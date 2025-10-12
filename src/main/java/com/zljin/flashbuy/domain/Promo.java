@@ -19,7 +19,7 @@ public class Promo {
      * 主键，自增ID
      */
     @TableId(value = "id")
-    private Long id;
+    private String id;
 
     /**
      * 活动名称
@@ -43,7 +43,7 @@ public class Promo {
      * 关联商品ID
      */
     @TableField(value = "item_id")
-    private Long itemId;
+    private String itemId;
 
     /**
      * 活动商品价格

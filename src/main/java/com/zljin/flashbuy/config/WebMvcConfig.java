@@ -22,6 +22,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
             "/v3/api-docs/**",
             "/webjars/**");
 
+    private static final List<String> staticWhiteList = Arrays.asList(
+            "/*.html",
+            "/favicon.ico",
+            "/*.css",
+            "/*.js"
+    );
+
 
     private final UserInterceptor userInterceptor;
 
@@ -38,6 +45,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 //添加白名单
                 .excludePathPatterns(businessApiWhiteList)
-                .excludePathPatterns(swaggerUIWhiteList);
+                .excludePathPatterns(swaggerUIWhiteList)
+                .excludePathPatterns(staticWhiteList);
+
     }
 }

@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Data
 public class ItemDTO {
-    private Long id;
+    private String id;
 
     @NotBlank(message = "商品名称不能为空")
     private String title;
@@ -37,7 +37,7 @@ public class ItemDTO {
     @Data
     @NoArgsConstructor
     public static class Promo {
-        private Long id;
+        private String id;
 
         //秒杀活动状态：1表示还未开始，2表示正在进行，3表示已结束
         private Integer status = 0;
@@ -50,7 +50,7 @@ public class ItemDTO {
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         private Date endDate;
 
-        private Long itemId;
+        private String itemId;
 
         private BigDecimal promoItemPrice;
     }

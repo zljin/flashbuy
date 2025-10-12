@@ -18,7 +18,7 @@ public class ItemStock {
      * 主键，自增ID
      */
     @TableId(value = "id")
-    private Long id;
+    private String id;
 
     /**
      * 库存数量
@@ -30,7 +30,7 @@ public class ItemStock {
      * 商品ID，关联 item 表
      */
     @TableField(value = "item_id")
-    private Long itemId;
+    private String itemId;
 
     /**
      * 创建时间
