@@ -1,5 +1,5 @@
 # flashbuy
-> 技术栈:JDK17+SprintBoot3+MyBatisPlus+MySQL+Redis
+> 技术栈:JDK17+SprintBoot3+MyBatisPlus+MySQL+Redis+JQuery+Ajax+Boostrap
 
 > 如何启动
 
@@ -14,3 +14,8 @@ spring.profiles.active=dev;app.adminAccount=464480515@qq.com;jwt.secret=mySecret
 6. 之后你就能跑通所有postman接口，实现一个秒杀系统的最小实现
 
 > 接口文档: http://localhost:8090/swagger-ui/index.html
+
+
+> 前端访问：http://localhost:8090/login.html
+
+也可以直接打开双击打开html，效果一样，前后端分离

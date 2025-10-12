@@ -23,10 +23,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
             "/webjars/**");
 
     private static final List<String> staticWhiteList = Arrays.asList(
-            "/*.html",
-            "/favicon.ico",
-            "/*.css",
-            "/*.js"
+            "/**/*.html",
+            "/**/*.css",
+            "/**/*.js",
+            "/favicon.ico"
     );
 
 

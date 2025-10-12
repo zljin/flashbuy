@@ -86,7 +86,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(JwtException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public R<Void> handleJwtException(JwtException e, HttpServletRequest request) {
-        log.error("jwt: {} - {}", request.getRequestURI(), e.getMessage(), e);
+        log.error("jwt: {} - {}", request.getRequestURI(), e.getMessage());
         R<Void> result = R.error(500, e.getMessage());
         result.setPath(request.getRequestURI());
         return result;
@@ -110,7 +110,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NullPointerException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public R<Void> handleNullPointerException(NullPointerException e, HttpServletRequest request) {
-        log.error("空指针异常: {} - {}", request.getRequestURI(), e.getMessage(), e);
+        log.error("空指针异常: {} - {}", request.getRequestURI(), e.getMessage());
         R<Void> result = R.error(500, "系统内部错误");
         result.setPath(request.getRequestURI());
         return result;
@@ -122,7 +122,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public R<Void> handleException(Exception e, HttpServletRequest request) {
-        log.error("系统异常: {} - {}", request.getRequestURI(), e.getMessage(), e);
+        log.error("系统异常: {} - {}", request.getRequestURI(), e.getMessage());
 
         // 生产环境可以返回更友好的提示
         String message = "系统繁忙，请稍后重试";
