@@ -7,6 +7,7 @@ import com.zljin.flashbuy.domain.OrderInfo;
 import com.zljin.flashbuy.exception.BusinessException;
 import com.zljin.flashbuy.exception.BusinessExceptionEnum;
 import com.zljin.flashbuy.mapper.OrderInfoMapper;
+import com.zljin.flashbuy.model.vo.UserVO;
 import com.zljin.flashbuy.service.ItemService;
 import com.zljin.flashbuy.service.OrderInfoService;
 import com.zljin.flashbuy.util.AppConstants;
@@ -41,7 +42,11 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public OrderVO createOrder(String itemId, String promoId, Integer amount) {
-        String userId = UserInfoHolder.getUser().getId();
+        UserVO user = UserInfoHolder.getUser();
+        if (user == null) {
+            throw new BusinessException(BusinessExceptionEnum.USER_NOT_LOGIN, BusinessExceptionEnum.USER_NOT_LOGIN.getErrorMessage());
+        }
+        String userId = user.getId();
         try {
             ItemVO itemVO = itemService.getItemById(itemId);
             if (itemVO == null) {
