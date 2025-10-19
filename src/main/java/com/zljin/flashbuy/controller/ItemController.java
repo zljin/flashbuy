@@ -7,6 +7,7 @@ import com.zljin.flashbuy.model.dto.ItemDTO;
 import com.zljin.flashbuy.model.vo.ItemVO;
 import com.zljin.flashbuy.model.vo.PageResult;
 import jakarta.validation.Valid;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,8 @@ public class ItemController {
         return ResponseEntity.ok(R.success(itemService.createItem(itemDTO)));
     }
 
+    //添加本地缓存
+    @Cacheable(value = "item",key = "#itemId")
     @GetMapping("/get/{itemId}")
     public ResponseEntity<R<ItemVO>> getItem(@PathVariable(value = "itemId") String itemId) {
         return ResponseEntity.ok(R.success(itemService.getItemById((itemId))));

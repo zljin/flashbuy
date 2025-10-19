@@ -2,6 +2,17 @@ server:
   port: 8090
   max-http-request-header-size: 65536
 
+# http://localhost:8090/actuator/health
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,caches
+  endpoint:
+    caches:
+      access: read_only
+    health:
+      show-details: always
 
 # mysql
 spring:
