@@ -1,0 +1,6 @@
+scrape_configs:
+  - job_name: 'flashbuy'
+    metrics_path: '/actuator/prometheus' # 指标端点路径[citation:1]
+    static_configs:
+      - targets: [ 'localhost:8090' ] # 你的应用地址[citation:1]
+    scrape_interval: 15s # 抓取间隔[citation:1]

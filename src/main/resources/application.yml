@@ -2,20 +2,11 @@ server:
   port: 8090
   max-http-request-header-size: 65536
 
-# http://localhost:8090/actuator/health
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,caches
-  endpoint:
-    caches:
-      access: read_only
-    health:
-      show-details: always
 
 # mysql
 spring:
+  application:
+    name: flashbuy
   datasource:
     url: jdbc:mysql://localhost:3306/flashbuy?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
@@ -56,3 +47,18 @@ mybatis-plus:
 logging:
   level:
     root: info
+
+# http://localhost:8090/actuator/health
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,caches,prometheus
+  endpoint:
+    caches:
+      access: read_only
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
