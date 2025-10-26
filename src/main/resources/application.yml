@@ -34,15 +34,15 @@ spring:
           max-idle: 8 # 连接池中的最大空闲连接
           min-idle: 0 # 连接池中的最小空闲连接
 
-mybatis-plus:
-  mapper-locations: classpath:/mapper/*.xml # mapper.xml文件路径
-  type-aliases-package: com.zljin.flashbuy.domain # 实体类路径
-  global-config:
-    db-config:
-      id-type: ASSIGN_ID # 主键生成策略，ASSIGN_ID通常配合雪花算法使用
-  configuration:
-    map-underscore-to-camel-case: true # 自动开启驼峰命名映射
-    cache-enabled: false # 关闭二级缓存
+  jpa:
+    hibernate:
+      ddl-auto: update # 自动更新表结构
+    show-sql: true # 显示SQL语句
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true # 格式化SQL
+    database-platform: org.hibernate.dialect.MySQL8Dialect
 
 logging:
   level:

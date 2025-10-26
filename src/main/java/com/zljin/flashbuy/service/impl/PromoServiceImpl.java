@@ -1,9 +1,6 @@
 package com.zljin.flashbuy.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zljin.flashbuy.service.PromoService;
-import com.zljin.flashbuy.domain.Promo;
-import com.zljin.flashbuy.mapper.PromoMapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,8 +9,7 @@ import org.springframework.stereotype.Service;
 * @createDate 2025-10-06 11:19:09
 */
 @Service
-public class PromoServiceImpl extends ServiceImpl<PromoMapper, Promo>
-    implements PromoService {
+public class PromoServiceImpl implements PromoService {
 
 }
 

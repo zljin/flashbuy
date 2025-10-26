@@ -1,53 +1,54 @@
 package com.zljin.flashbuy.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.util.Date;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * 商品库存表
- * @TableName item_stock
  */
-@TableName(value ="item_stock")
+@Entity
+@Table(name = "item_stock")
 @Data
 public class ItemStock {
     /**
      * 主键，自增ID
      */
-    @TableId(value = "id")
+    @Id
+    @GeneratedValue(generator = "snowflake")
+    @GenericGenerator(name = "snowflake", strategy = "com.zljin.flashbuy.util.SnowflakeIdGenerator")
+    @Column(name = "id")
     private String id;
 
     /**
      * 库存数量
      */
-    @TableField(value = "stock")
+    @Column(name = "stock")
     private Integer stock;
 
     /**
      * 商品ID，关联 item 表
      */
-    @TableField(value = "item_id")
+    @Column(name = "item_id")
     private String itemId;
 
     /**
      * 创建时间
      */
-    @TableField(value = "created_at")
-    private Date createdAt;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     /**
      * 更新时间
      */
-    @TableField(value = "updated_at")
-    private Date updatedAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     /**
      * 是否删除：0-未删除，1-已删除
      */
-    @TableField(value = "is_deleted")
+    @Column(name = "is_deleted")
     private Integer isDeleted;
 
     @Override

@@ -1,7 +1,5 @@
 package com.zljin.flashbuy.service;
 
-import com.zljin.flashbuy.domain.UserInfo;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.zljin.flashbuy.model.dto.RegisterDTO;
 import com.zljin.flashbuy.model.vo.UserVO;
 
@@ -10,7 +8,7 @@ import com.zljin.flashbuy.model.vo.UserVO;
 * @description 针对表【user_info(用户信息表)】的数据库操作Service
 * @createDate 2025-10-06 11:19:14
 */
-public interface UserInfoService extends IService<UserInfo> {
+public interface UserInfoService {
 
     void register(RegisterDTO registerDTO);
 

@@ -1,8 +1,5 @@
 package com.zljin.flashbuy.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zljin.flashbuy.model.dto.ItemDTO;
 import com.zljin.flashbuy.model.vo.ItemVO;
 import com.zljin.flashbuy.model.vo.PageResult;
@@ -11,18 +8,21 @@ import com.zljin.flashbuy.domain.ItemStock;
 import com.zljin.flashbuy.domain.Promo;
 import com.zljin.flashbuy.exception.BusinessException;
 import com.zljin.flashbuy.exception.BusinessExceptionEnum;
-import com.zljin.flashbuy.mapper.ItemMapper;
-import com.zljin.flashbuy.mapper.ItemStockMapper;
-import com.zljin.flashbuy.mapper.PromoMapper;
+import com.zljin.flashbuy.repository.ItemRepository;
+import com.zljin.flashbuy.repository.ItemStockRepository;
+import com.zljin.flashbuy.repository.PromoRepository;
 import com.zljin.flashbuy.service.ItemService;
 import com.zljin.flashbuy.util.AppConstants;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -31,19 +31,18 @@ import java.util.List;
  * @createDate 2025-10-06 11:16:56
  */
 @Service
-public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item>
-        implements ItemService {
+public class ItemServiceImpl implements ItemService {
 
-    private final ItemMapper itemMapper;
+    private final ItemRepository itemRepository;
 
-    private final ItemStockMapper itemStockMapper;
+    private final ItemStockRepository itemStockRepository;
 
-    private final PromoMapper promoMapper;
+    private final PromoRepository promoRepository;
 
-    public ItemServiceImpl(ItemMapper itemMapper, ItemStockMapper itemStockMapper, PromoMapper promoMapper) {
-        this.itemMapper = itemMapper;
-        this.itemStockMapper = itemStockMapper;
-        this.promoMapper = promoMapper;
+    public ItemServiceImpl(ItemRepository itemRepository, ItemStockRepository itemStockRepository, PromoRepository promoRepository) {
+        this.itemRepository = itemRepository;
+        this.itemStockRepository = itemStockRepository;
+        this.promoRepository = promoRepository;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -52,12 +51,18 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item>
         try {
             Item item = new Item();
             BeanUtils.copyProperties(itemDTO, item);
-            itemMapper.insert(item);
+            item.setCreatedAt(LocalDateTime.now());
+            item.setUpdatedAt(LocalDateTime.now());
+            item.setIsDeleted(0);
+            itemRepository.save(item);
 
             ItemStock itemStock = new ItemStock();
             itemStock.setItemId(item.getId());
             itemStock.setStock(itemDTO.getStock());
-            itemStockMapper.insert(itemStock);
+            itemStock.setCreatedAt(LocalDateTime.now());
+            itemStock.setUpdatedAt(LocalDateTime.now());
+            itemStock.setIsDeleted(0);
+            itemStockRepository.save(itemStock);
 
             ItemDTO.Promo promo = itemDTO.getPromo();
             if (promo.getStatus() != 0
@@ -66,52 +71,57 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item>
                     && promo.getStartDate() != null
                     && promo.getEndDate() != null) {
                 Promo promoDb = new Promo();
-                BeanUtils.copyProperties(promo, promoDb);
+                promoDb.setPromoName(promo.getPromoName());
+                promoDb.setPromoItemPrice(promo.getPromoItemPrice());
+                // 转换Date为LocalDateTime
+                promoDb.setStartDate(promo.getStartDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime());
+                promoDb.setEndDate(promo.getEndDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime());
                 promoDb.setItemId(item.getId());
-                promoMapper.insert(promoDb);
+                promoDb.setCreatedAt(LocalDateTime.now());
+                promoDb.setUpdatedAt(LocalDateTime.now());
+                promoDb.setIsDeleted(0);
+                promoRepository.save(promoDb);
             }
             return getItemById(item.getId());
         } catch (Exception e) {
-            log.error("createItem error: ", e);
             throw new BusinessException(BusinessExceptionEnum.ADD_ITEM_ERROR, BusinessExceptionEnum.ADD_ITEM_ERROR.getErrorMessage());
         }
     }
 
     @Override
     public ItemVO getItemById(String id) {
-        Item itemEntity = itemMapper.selectById(id);
-        QueryWrapper<ItemStock> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("item_id", id);
-        ItemStock itemStockEntity = itemStockMapper.selectOne(queryWrapper);
-        QueryWrapper<Promo> queryWrapper2 = new QueryWrapper<>();
-        queryWrapper2.eq("item_id", id);
-        Promo promoEntity = promoMapper.selectOne(queryWrapper2);
+        Item itemEntity = itemRepository.findByIdAndIsDeleted(id);
+        ItemStock itemStockEntity = itemStockRepository.findByItemIdAndIsDeleted(id);
+        Promo promoEntity = promoRepository.findByItemIdAndIsDeleted(id);
         return convert2ItemVO(itemEntity, itemStockEntity, promoEntity);
     }
 
     @Override
     public PageResult<ItemVO> listItem(String title, Integer pageCurrent, Integer pageSize) {
-        Page<Item> page = new Page<>(pageCurrent, pageSize);
-        QueryWrapper<Item> queryWrapper = new QueryWrapper<>();
+        Pageable pageable = PageRequest.of(pageCurrent - 1, pageSize);
+        Page<Item> itemPage;
+        
         if (!StringUtils.isBlank(title)) {
-            queryWrapper.like("title", title);
+            itemPage = itemRepository.findByTitleContainingAndIsDeletedOrderByCreatedAtDesc(title, pageable);
+        } else {
+            itemPage = itemRepository.findByIsDeletedOrderByCreatedAtDesc(pageable);
         }
-        queryWrapper.orderByDesc("created_at");
-        Page<Item> itemPage = itemMapper.selectPage(page, queryWrapper);
-        if (itemPage == null || itemPage.getRecords() == null || itemPage.getRecords().isEmpty()) {
+        
+        if (itemPage == null || itemPage.getContent().isEmpty()) {
             return PageResult.error(404, "no data");
         }
-        List<ItemVO> list = itemPage.getRecords().stream()
+        
+        List<ItemVO> list = itemPage.getContent().stream()
                 .map(item -> getItemById(item.getId()))
                 .toList();
-        return PageResult.success(itemPage.getCurrent(), itemPage.getPages(), itemPage.getTotal(), list);
+        return PageResult.success(itemPage.getNumber() + 1, itemPage.getTotalPages(), itemPage.getTotalElements(), list);
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public void decreaseStock(String itemId, Integer amount) {
         //todo 后面用分布式锁
-        int affectedRow = itemStockMapper.decreaseStock(itemId, amount);
+        int affectedRow = itemStockRepository.decreaseStock(itemId, amount);
         if (affectedRow <= 0) {
             throw new BusinessException(BusinessExceptionEnum.STOCK_NOT_ENOUGH, BusinessExceptionEnum.STOCK_NOT_ENOUGH.getErrorMessage());
         }
@@ -121,7 +131,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item>
     @Override
     public void increaseSales(String itemId, Integer amount) {
         //todo 后面用分布式锁
-        itemStockMapper.increaseSales(itemId, amount);
+        itemRepository.increaseSales(itemId, amount);
     }
 
     private ItemVO convert2ItemVO(Item itemEntity, ItemStock itemStockEntity, Promo promoEntity) {
@@ -138,8 +148,9 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item>
             promoVO.setStatus(getPromoStatus(promoEntity));
             promoVO.setPromoItemPrice(promoEntity.getPromoItemPrice());
             promoVO.setPromoName(promoEntity.getPromoName());
-            promoVO.setStartDate(promoEntity.getStartDate());
-            promoVO.setEndDate(promoEntity.getEndDate());
+            // 转换LocalDateTime为Date
+            promoVO.setStartDate(java.sql.Timestamp.valueOf(promoEntity.getStartDate()));
+            promoVO.setEndDate(java.sql.Timestamp.valueOf(promoEntity.getEndDate()));
             promoVO.setItemId(itemVO.getId());
             itemVO.setPromo(promoVO);
         }
@@ -147,12 +158,12 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item>
     }
 
     private int getPromoStatus(Promo promoEntity) {
-        long now = new Date().getTime() / 1000;
-        long start = promoEntity.getStartDate().getTime() / 1000;
-        long end = promoEntity.getEndDate().getTime() / 1000;
-        if (now < start) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime start = promoEntity.getStartDate();
+        LocalDateTime end = promoEntity.getEndDate();
+        if (now.isBefore(start)) {
             return AppConstants.PROMOTE_WAIT;
-        } else if (now > end) {
+        } else if (now.isAfter(end)) {
             return AppConstants.PROMOTE_END;
         }
         return AppConstants.PROMOTE_PROCESS;

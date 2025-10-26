@@ -1,82 +1,84 @@
 package com.zljin.flashbuy.domain;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.util.Date;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * 用户信息表
- * @TableName user_info
  */
-@TableName(value ="user_info")
+@Entity
+@Table(name = "user_info")
 @Data
 public class UserInfo {
     /**
      * 用户ID
      */
-    @TableId(value = "id")
+    @Id
+    @GeneratedValue(generator = "snowflake")
+    @GenericGenerator(name = "snowflake", strategy = "com.zljin.flashbuy.util.SnowflakeIdGenerator")
+    @Column(name = "id")
     private String id;
 
     /**
      * 用户名
      */
-    @TableField(value = "name")
+    @Column(name = "name")
     private String name;
 
     /**
      * 性别
      */
-    @TableField(value = "gender")
+    @Column(name = "gender")
     private String gender;
 
     /**
      * 年龄
      */
-    @TableField(value = "age")
+    @Column(name = "age")
     private Integer age;
 
     /**
      * 手机号
      */
-    @TableField(value = "telephone")
+    @Column(name = "telephone")
     private String telephone;
 
     /**
      * 注册方式: phone|wechat|alipay
      */
-    @TableField(value = "register_mode")
+    @Column(name = "register_mode")
     private String registerMode;
 
     /**
      * 第三方ID
      */
-    @TableField(value = "third_party_id")
+    @Column(name = "third_party_id")
     private String thirdPartyId;
 
     /**
      * 邮箱
      */
-    @TableField(value = "email")
+    @Column(name = "email")
     private String email;
 
     /**
      * 创建时间
      */
-    @TableField(value = "created_at")
-    private Date createdAt;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     /**
      * 更新时间
      */
-    @TableField(value = "updated_at")
-    private Date updatedAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     /**
      * 是否删除：0-未删除，1-已删除
      */
-    @TableField(value = "is_deleted")
+    @Column(name = "is_deleted")
     private Integer isDeleted;
 
     @Override

@@ -3,7 +3,7 @@ package com.zljin.flashbuy.service.impl;
 import com.zljin.flashbuy.domain.OrderInfo;
 import com.zljin.flashbuy.exception.BusinessException;
 import com.zljin.flashbuy.exception.BusinessExceptionEnum;
-import com.zljin.flashbuy.mapper.OrderInfoMapper;
+import com.zljin.flashbuy.repository.OrderInfoRepository;
 import com.zljin.flashbuy.model.dto.ItemDTO;
 import com.zljin.flashbuy.model.vo.ItemVO;
 import com.zljin.flashbuy.model.vo.OrderVO;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 class OrderInfoServiceImplTest {
 
     @Mock
-    private OrderInfoMapper orderInfoMapper;
+    private OrderInfoRepository orderInfoRepository;
 
     @Mock
     private ItemService itemService;
@@ -55,7 +55,7 @@ class OrderInfoServiceImplTest {
         ItemVO itemVO = createMockItemVO(true, AppConstants.PROMOTE_PROCESS);
         when(itemService.getItemById(ITEM_ID)).thenReturn(itemVO);
 
-        when(orderInfoMapper.insert(any(OrderInfo.class))).thenReturn(1);
+        when(orderInfoRepository.save(any(OrderInfo.class))).thenReturn(new OrderInfo());
 
         // When
         OrderVO result = orderInfoService.createOrder(ITEM_ID, PROMO_ID, AMOUNT);
@@ -73,7 +73,7 @@ class OrderInfoServiceImplTest {
         verify(itemService).getItemById(ITEM_ID);
         verify(itemService).decreaseStock(ITEM_ID, AMOUNT);
         verify(itemService).increaseSales(ITEM_ID, AMOUNT);
-        verify(orderInfoMapper).insert(any(OrderInfo.class));
+        verify(orderInfoRepository).save(any(OrderInfo.class));
 
     }
 
@@ -90,7 +90,7 @@ class OrderInfoServiceImplTest {
 
         verify(itemService, never()).decreaseStock(anyString(), anyInt());
         verify(itemService, never()).increaseSales(anyString(), anyInt());
-        verify(orderInfoMapper, never()).insert(any(OrderInfo.class));
+        verify(orderInfoRepository, never()).save(any(OrderInfo.class));
 
     }
 

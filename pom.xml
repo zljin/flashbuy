@@ -98,19 +98,10 @@
         </dependency>
 
 
-        <!--mybatis-plus-->
+        <!--JPA-->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
-        </dependency>
-
-        <!--
-            MyBatis-Plus 3.5.9 版本开始，PaginationInnerInterceptor 类所需的 SQL 解析功能被分离到了
-            mybatis-plus-jsqlparser 模块中
-        -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-jsqlparser</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
         <!--mysql8 数据库驱动-->
@@ -167,32 +158,8 @@
             <scope>test</scope>
         </dependency>
 
-        <!--mybatis-plus unit test-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>mybatis-spring</artifactId>
-                    <groupId>org.mybatis</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
     </dependencies>
 
-    <!--maven bom 管理依赖，减少版本号的冲突-->
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-bom</artifactId>
-                <version>3.5.14</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <plugins>

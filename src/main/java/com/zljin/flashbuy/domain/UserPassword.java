@@ -1,34 +1,35 @@
 package com.zljin.flashbuy.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * 用户密码表
- * @TableName user_password
  */
-@TableName(value ="user_password")
+@Entity
+@Table(name = "user_password")
 @Data
 public class UserPassword {
     /**
      * 主键，自增ID
      */
-    @TableId(value = "id")
+    @Id
+    @GeneratedValue(generator = "snowflake")
+    @GenericGenerator(name = "snowflake", strategy = "com.zljin.flashbuy.util.SnowflakeIdGenerator")
+    @Column(name = "id")
     private String id;
 
     /**
      * 加密密码
      */
-    @TableField(value = "encrpt_password")
+    @Column(name = "encrpt_password")
     private String encrptPassword;
 
     /**
      * 用户ID，关联 user_info 表
      */
-    @TableField(value = "user_id")
+    @Column(name = "user_id")
     private String userId;
 
     @Override

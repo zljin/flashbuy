@@ -1,7 +1,5 @@
 package com.zljin.flashbuy.service;
 
-import com.zljin.flashbuy.domain.Item;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.zljin.flashbuy.model.dto.ItemDTO;
 import com.zljin.flashbuy.model.vo.ItemVO;
 import com.zljin.flashbuy.model.vo.PageResult;
@@ -11,7 +9,7 @@ import com.zljin.flashbuy.model.vo.PageResult;
 * @description 针对表【item(商品表)】的数据库操作Service
 * @createDate 2025-10-06 11:16:56
 */
-public interface ItemService extends IService<Item> {
+public interface ItemService {
 
     ItemVO createItem(ItemDTO itemDTO);
 

@@ -1,72 +1,73 @@
 package com.zljin.flashbuy.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * 活动表
- * @TableName promo
  */
-@TableName(value ="promo")
+@Entity
+@Table(name = "promo")
 @Data
 public class Promo {
     /**
      * 主键，自增ID
      */
-    @TableId(value = "id")
+    @Id
+    @GeneratedValue(generator = "snowflake")
+    @GenericGenerator(name = "snowflake", strategy = "com.zljin.flashbuy.util.SnowflakeIdGenerator")
+    @Column(name = "id")
     private String id;
 
     /**
      * 活动名称
      */
-    @TableField(value = "promo_name")
+    @Column(name = "promo_name")
     private String promoName;
 
     /**
      * 开始时间
      */
-    @TableField(value = "start_date")
-    private Date startDate;
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
 
     /**
      * 结束时间
      */
-    @TableField(value = "end_date")
-    private Date endDate;
+    @Column(name = "end_date")
+    private LocalDateTime endDate;
 
     /**
      * 关联商品ID
      */
-    @TableField(value = "item_id")
+    @Column(name = "item_id")
     private String itemId;
 
     /**
      * 活动商品价格
      */
-    @TableField(value = "promo_item_price")
+    @Column(name = "promo_item_price")
     private BigDecimal promoItemPrice;
 
     /**
      * 创建时间
      */
-    @TableField(value = "created_at")
-    private Date createdAt;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     /**
      * 更新时间
      */
-    @TableField(value = "updated_at")
-    private Date updatedAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     /**
      * 是否删除：0-未删除，1-已删除
      */
-    @TableField(value = "is_deleted")
+    @Column(name = "is_deleted")
     private Integer isDeleted;
 
     @Override

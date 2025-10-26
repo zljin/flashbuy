@@ -1,12 +1,11 @@
 package com.zljin.flashbuy.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zljin.flashbuy.model.vo.ItemVO;
 import com.zljin.flashbuy.model.vo.OrderVO;
 import com.zljin.flashbuy.domain.OrderInfo;
 import com.zljin.flashbuy.exception.BusinessException;
 import com.zljin.flashbuy.exception.BusinessExceptionEnum;
-import com.zljin.flashbuy.mapper.OrderInfoMapper;
+import com.zljin.flashbuy.repository.OrderInfoRepository;
 import com.zljin.flashbuy.model.vo.UserVO;
 import com.zljin.flashbuy.service.ItemService;
 import com.zljin.flashbuy.service.OrderInfoService;
@@ -20,6 +19,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @author zoulingjin
@@ -28,14 +28,13 @@ import java.math.BigDecimal;
  */
 @Slf4j
 @Service
-public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo>
-        implements OrderInfoService {
+public class OrderInfoServiceImpl implements OrderInfoService {
 
-    private final OrderInfoMapper orderInfoMapper;
+    private final OrderInfoRepository orderInfoRepository;
     private final ItemService itemService;
 
-    public OrderInfoServiceImpl(OrderInfoMapper orderInfoMapper, ItemService itemService) {
-        this.orderInfoMapper = orderInfoMapper;
+    public OrderInfoServiceImpl(OrderInfoRepository orderInfoRepository, ItemService itemService) {
+        this.orderInfoRepository = orderInfoRepository;
         this.itemService = itemService;
     }
 
@@ -72,7 +71,10 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             orderInfoEntity.setItemPrice((promoId != null ? itemVO.getPromo().getPromoItemPrice() : itemVO.getPrice()));
             orderInfoEntity.setOrderPrice(orderInfoEntity.getItemPrice().multiply(new BigDecimal(amount)));
             orderInfoEntity.setId(CommonUtil.generateOrderId());
-            orderInfoMapper.insert(orderInfoEntity);
+            orderInfoEntity.setCreatedAt(LocalDateTime.now());
+            orderInfoEntity.setUpdatedAt(LocalDateTime.now());
+            orderInfoEntity.setIsDeleted(0);
+            orderInfoRepository.save(orderInfoEntity);
 
             //记录商品销量
             itemService.increaseSales(itemId, amount);
