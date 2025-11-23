@@ -13,6 +13,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private static final List<String> businessApiWhiteList = Arrays.asList(
             "/**/get-otp/**",
             "/**/register/**",
+            "/**/function/**",
             "/**/login/**");
 
     private static final List<String> swaggerUIWhiteList = Arrays.asList(
