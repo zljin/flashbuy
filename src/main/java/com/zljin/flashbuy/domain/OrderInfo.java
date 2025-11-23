@@ -1,10 +1,10 @@
 package com.zljin.flashbuy.domain;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * 订单表
@@ -17,8 +17,6 @@ public class OrderInfo {
      * 订单主键
      */
     @Id
-    @GeneratedValue(generator = "snowflake")
-    @GenericGenerator(name = "snowflake", strategy = "com.zljin.flashbuy.util.SnowflakeIdGenerator")
     @Column(name = "id")
     private String id;
 

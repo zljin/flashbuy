@@ -2,7 +2,6 @@ package com.zljin.flashbuy.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * 用户密码表
@@ -15,9 +14,8 @@ public class UserPassword {
      * 主键，自增ID
      */
     @Id
-    @GeneratedValue(generator = "snowflake")
-    @GenericGenerator(name = "snowflake", strategy = "com.zljin.flashbuy.util.SnowflakeIdGenerator")
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     /**

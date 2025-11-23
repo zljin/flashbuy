@@ -17,8 +17,7 @@ public class RegisterDTO {
     @Pattern(regexp = "(^Man$|^Woman$|^UGM$)", message = "sex 值不在可选范围")
     private String gender;
 
-    @Pattern(regexp = "(^(1[0-9]|[1-9][0-9])$)", message = "范围在10到99岁之间")
-    private String age;
+    private Integer age;
 
     @NotBlank(message = "手机号不能为空")
     private String telephone;
