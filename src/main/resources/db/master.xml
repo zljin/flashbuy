@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+
+    <include file="/db/20251228/001-create-table.xml"/>
+
+    <changeSet id="R_2025_1228" author="zljin">
+        <tagDatabase tag="R_2025_1228"/>
+    </changeSet>
+
+    <include file="/db/20251228/002-init-data.xml"/>
+
+</databaseChangeLog>

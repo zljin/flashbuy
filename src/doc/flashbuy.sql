@@ -90,7 +90,6 @@ CREATE TABLE `order_info` (
                               KEY `idx_user_id` (`user_id`),
                               KEY `idx_item_id` (`item_id`),
                               CONSTRAINT `fk_order_user` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`),
-                              CONSTRAINT `fk_order_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`),
-                              CONSTRAINT `fk_order_promo` FOREIGN KEY (`promo_id`) REFERENCES `promo` (`id`)
+                              CONSTRAINT `fk_order_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='订单表';
 

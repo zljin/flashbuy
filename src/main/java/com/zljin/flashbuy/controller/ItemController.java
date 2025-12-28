@@ -33,8 +33,8 @@ public class ItemController {
         return ResponseEntity.ok(R.success(itemService.createItem(itemDTO)));
     }
 
-    //添加本地缓存
-    @Cacheable(value = "item",key = "#itemId")
+    //bugfix: 这里不用添加本地缓存，否则下单后销量不会扣减
+    //@Cacheable(value = "item",key = "#itemId")
     @GetMapping("/get/{itemId}")
     public ResponseEntity<R<ItemVO>> getItem(@PathVariable(value = "itemId") String itemId) {
         return ResponseEntity.ok(R.success(itemService.getItemById((itemId))));

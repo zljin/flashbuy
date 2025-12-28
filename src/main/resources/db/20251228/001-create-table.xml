@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="R_2025_1228_1" author="zljin">
+        <sqlFile path="db/changeset/table/item.sql"/>
+        <rollback>
+            <sqlFile path="db/changeset/table/rollback/drop_item.sql"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="R_2025_1228_2" author="zljin">
+        <sqlFile path="db/changeset/table/item_stock.sql"/>
+        <rollback>
+            <sqlFile path="db/changeset/table/rollback/drop_item_stock.sql"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="R_2025_1228_3" author="zljin">
+        <sqlFile path="db/changeset/table/promo.sql"/>
+        <rollback>
+            <sqlFile path="db/changeset/table/rollback/drop_promo.sql"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="R_2025_1228_4" author="zljin">
+        <sqlFile path="db/changeset/table/user_info.sql"/>
+        <rollback>
+            <sqlFile path="db/changeset/table/rollback/drop_user_info.sql"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="R_2025_1228_5" author="zljin">
+        <sqlFile path="db/changeset/table/user_password.sql"/>
+        <rollback>
+            <sqlFile path="db/changeset/table/rollback/drop_user_password.sql"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="R_2025_1228_6" author="zljin">
+        <sqlFile path="db/changeset/table/order_info.sql"/>
+        <rollback>
+            <sqlFile path="db/changeset/table/rollback/drop_order_info.sql"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

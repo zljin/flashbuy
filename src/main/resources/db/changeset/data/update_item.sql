@@ -1,0 +1,1 @@
+update `item` set `img_url` = 'https://cdn.jsdelivr.net/gh/zljin/img_bed/iphone17.png?raw=true';

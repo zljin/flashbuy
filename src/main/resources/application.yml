@@ -21,6 +21,10 @@ spring:
       pool-name: DateSourceHikariCP     # 连接池名字
       max-lifetime: 1800000           # 连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟 1800000ms
       connection-test-query: SELECT 1
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/master.xml
+    drop-first: false
   data:
     redis:
       host: 127.0.0.1
@@ -39,7 +43,7 @@ mybatis-plus:
   type-aliases-package: com.zljin.flashbuy.domain # 实体类路径
   global-config:
     db-config:
-      id-type: ASSIGN_ID # 主键生成策略，ASSIGN_ID通常配合雪花算法使用
+      id-type: ASSIGN_UUID # 主键生成策略，ASSIGN_ID通常配合雪花算法使用
   configuration:
     map-underscore-to-camel-case: true # 自动开启驼峰命名映射
     cache-enabled: false # 关闭二级缓存

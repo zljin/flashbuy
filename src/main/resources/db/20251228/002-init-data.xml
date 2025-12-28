@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="mock-data-1" author="zoulingjin">
+        <sqlFile path="db/changeset/data/data_item.sql"/>
+        <rollback>
+            <sqlFile path="db/changeset/data/rollback/delete_data_item.sql"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="mock-data-2" author="zoulingjin">
+        <sqlFile path="db/changeset/data/data_item_stock.sql"/>
+        <rollback>
+            <sqlFile path="db/changeset/data/rollback/delete_data_item_stock.sql"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="mock-data-3" author="zoulingjin">
+        <sqlFile path="db/changeset/data/data_promo.sql"/>
+        <rollback>
+            <sqlFile path="db/changeset/data/rollback/delete_data_promo.sql"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="mock-data-4" author="zoulingjin">
+        <sqlFile path="db/changeset/data/update_item.sql"/>
+    </changeSet>
+
+</databaseChangeLog>

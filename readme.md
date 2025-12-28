@@ -1,5 +1,5 @@
 # flashbuy
-> 技术栈:JDK17+SprintBoot3+MyBatisPlus+MySQL+Redis+JQuery+Ajax+Boostrap
+> 技术栈:JDK17+SprintBoot3+MyBatisPlus+MySQL+liquibase+Redis+JQuery+Ajax+Boostrap
 
 > 如何启动
 
@@ -19,3 +19,8 @@ spring.profiles.active=dev;app.adminAccount=464480515@qq.com;jwt.secret=mySecret
 > 前端访问：http://localhost:8090/login.html
 
 也可以直接打开双击打开html，效果一样，前后端分离
+
+
+## update log
+
+1. 添加liquibase做数据库状态管理
