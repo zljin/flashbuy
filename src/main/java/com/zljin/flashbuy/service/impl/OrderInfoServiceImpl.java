@@ -57,6 +57,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
                 if (!promoId.equals(itemVO.getPromo().getId())) {
                     throw new BusinessException(BusinessExceptionEnum.PARAMETER_VALIDATION_ERROR, "活动信息不正确");
                 } else if (itemVO.getPromo().getStatus() == AppConstants.PROMOTE_END) {
+                    //秒杀活动结束，还是可以原价购买的
                     log.info("promote end...");
                     itemVO.setPromo(null);
                     promoId = null;
