@@ -53,6 +53,7 @@ public class ItemServiceImpl implements ItemService {
             BeanUtils.copyProperties(itemDTO, item);
             item.setCreatedAt(LocalDateTime.now());
             item.setUpdatedAt(LocalDateTime.now());
+            item.setSales(0);
             item.setIsDeleted(0);
             itemRepository.save(item);
 

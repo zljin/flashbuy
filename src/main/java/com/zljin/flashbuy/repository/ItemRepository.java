@@ -8,9 +8,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * 商品Repository
@@ -40,7 +37,6 @@ public interface ItemRepository extends JpaRepository<Item, String> {
      * 增加销量
      */
     @Modifying
-    @Transactional
     @Query("UPDATE Item i SET i.sales = i.sales + :amount WHERE i.id = :itemId AND i.isDeleted = 0")
     int increaseSales(@Param("itemId") String itemId, @Param("amount") Integer amount);
 }

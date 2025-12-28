@@ -1,9 +1,9 @@
 package com.zljin.flashbuy.domain;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
+
+import java.time.LocalDateTime;
 
 /**
  * 用户信息表
@@ -16,9 +16,8 @@ public class UserInfo {
      * 用户ID
      */
     @Id
-    @GeneratedValue(generator = "snowflake")
-    @GenericGenerator(name = "snowflake", strategy = "com.zljin.flashbuy.util.SnowflakeIdGenerator")
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     /**
