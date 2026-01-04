@@ -20,6 +20,15 @@ spring.profiles.active=dev;app.adminAccount=464480515@qq.com;jwt.secret=mySecret
 
 也可以直接打开双击打开html，效果一样，前后端分离
 
+# 通过cursor完成前端新版本
+
+前端老版本，采用原生js：
+https://github.com/zljin/flashbuy/tree/master/src/main/resources/static
+
+前端新版本，采用vue3:
+https://github.com/zljin/flashbuy-vue
+
+
 
 # 功能介绍
 
