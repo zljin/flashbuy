@@ -193,6 +193,9 @@
             $("#promoPrice").text(g_itemVO.promo.promoItemPrice);
             $("#createorder").attr("disabled", false);
             $("#normalPriceContainer").hide();
+        } else if(g_itemVO.promo.status == 3){
+            //秒杀活动结束，还是可以原价购买的
+            $("#createorder").attr("disabled", false);
         }
     }
 </script>
